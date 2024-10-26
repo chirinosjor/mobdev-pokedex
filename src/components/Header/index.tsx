@@ -13,7 +13,9 @@ function Header() {
           <div className="flex-1 mr-4 sm:mx-4 sm:flex sm:justify-center">
             <Searchbar />
           </div>
-          <SortButton />
+          <div className="md:w-32 flex justify-center">
+            <SortButton />
+          </div>
         </div>
       </div>
     </div>

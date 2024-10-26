@@ -14,21 +14,23 @@ export type PokemonDetailType = {
 };
 
 interface PokemonStore {
+  allPokemons: Pokemon[];
+  filteredPokemons: Pokemon[] | null;
+  setAllPokemons: (pokemons: Pokemon[]) => void;
+  setFilteredPokemons: (pokemons: Pokemon[] | null) => void;
   pokemons: Pokemon[];
   setPokemons: (pokemons: Pokemon[]) => void;
-  currentPage: number;
-  setCurrentPage: (page: number) => void;
-  pokemonsPerPage: number;
   selectedPokemon: PokemonDetailType | null;
   setSelectedPokemon: (pokemon: PokemonDetailType | null) => void;
 }
 
 const usePokemonStore = create<PokemonStore>((set) => ({
+  allPokemons: [],
+  filteredPokemons: null,
+  setAllPokemons: (pokemons) => set({ allPokemons: pokemons }),
+  setFilteredPokemons: (pokemons) => set({ filteredPokemons: pokemons }),
   pokemons: [],
   setPokemons: (pokemons) => set({ pokemons }),
-  currentPage: 1,
-  setCurrentPage: (page) => set({ currentPage: page }),
-  pokemonsPerPage: 20,
   selectedPokemon: null,
   setSelectedPokemon: (pokemon) => set({ selectedPokemon: pokemon }),
 }));

@@ -12,7 +12,7 @@ interface PokemonListResponse {
 
 export const TOTAL_POKEMONS = 151;
 
-export const fetchPokemonList = async (limit: number, offset: number): Promise<Pokemon[]> => {
+export const fetchPokemons = async (limit: number = TOTAL_POKEMONS, offset: number = 0): Promise<Pokemon[]> => {
   const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
   try {
     const response = await fetch(url);

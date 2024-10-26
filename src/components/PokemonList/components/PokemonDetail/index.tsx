@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Pokemon } from '../../services/pokemonList';
-import { fetchPokemonDetail, type PokemonDetailType } from '../../services/pokemonDetail';
-import usePokemonStore from '../../store/usePokemonStore';
+import { Pokemon } from '../../../../services/pokemonList';
+import { fetchPokemonDetail, type PokemonDetailType } from '../../../../services/pokemonDetail';
+import usePokemonStore from '../../../../store/usePokemonStore';
 
 const PokemonDetail: React.FC<{ pokemon: Pokemon; }> = ({ pokemon }) => {
   const { setSelectedPokemon } = usePokemonStore();
