@@ -26,12 +26,14 @@ function PokemonList() {
   return (
     <div className="flex flex-col h-full md:min-h[750px]">
       <div className="flex-grow">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 justify-items-center sm:my-4 md:my-8 lg:my-12">
-          {displayedPokemons.map((pokemon, index) => (
-            <div key={index} className="flex justify-center">
-              <PokemonDetail pokemon={pokemon} />
-            </div>
-          ))}
+        <div className="h-[650px] sm:h-[700px] md:h-[750px] overflow-y-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 justify-items-center sm:my-4 md:my-8 lg:my-12">
+            {displayedPokemons.map((pokemon, index) => (
+              <div key={index} className="flex justify-center">
+                <PokemonDetail pokemon={pokemon} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <PokemonListPagination
