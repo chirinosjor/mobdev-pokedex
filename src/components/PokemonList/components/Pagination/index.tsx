@@ -3,12 +3,20 @@ interface PokemonListPaginationProps {
   totalPokemons: number;
   pokemonsPerPage: number;
   setCurrentPage: (page: number) => void;
+  setPokemonsPerPage: (perPage: number) => void;
 }
 
-function PokemonListPagination({ currentPage, setCurrentPage, totalPokemons, pokemonsPerPage }: PokemonListPaginationProps) {
+function PokemonListPagination({
+  currentPage,
+  setCurrentPage,
+  totalPokemons,
+  pokemonsPerPage,
+  setPokemonsPerPage,
+}: PokemonListPaginationProps) {
+  const totalPages = Math.ceil(totalPokemons / pokemonsPerPage);
 
   const handleNextPage = () => {
-    if (currentPage < Math.ceil(totalPokemons / pokemonsPerPage)) {
+    if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -19,25 +27,50 @@ function PokemonListPagination({ currentPage, setCurrentPage, totalPokemons, pok
     }
   };
 
+  const handlePokemonsPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newPokemonsPerPage = Number(e.target.value);
+    setPokemonsPerPage(newPokemonsPerPage);
+    setCurrentPage(1);
+  };
+
   return (
-    <div className="flex mt-4 gap-12 justify-center items-center">
-      <button
-        onClick={handlePrevPage}
-        disabled={currentPage === 1}
-        className="bg-red-500 text-white p-2 rounded disabled:opacity-50"
-      >
-        Previous
-      </button>
-      <p className="text-center text-gray-500">
-        Page {currentPage} of {Math.ceil(totalPokemons / pokemonsPerPage)}
-      </p>
-      <button
-        onClick={handleNextPage}
-        disabled={currentPage >= Math.ceil(totalPokemons / pokemonsPerPage)}
-        className="bg-red-500 text-white p-2 rounded disabled:opacity-50"
-      >
-        Next
-      </button>
+    <div className="flex flex-col md:flex-row mt-4 gap-4 justify-center items-center">
+      <div className="flex gap-4">
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className={`bg-red-500 text-white py-2 px-4 rounded-lg transition duration-200 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-600'
+            }`}
+        >
+          Previous
+        </button>
+
+        <p className="text-center text-gray-500 flex items-center gap-2">
+          Page <span className="font-bold">{currentPage}</span> of <span className="font-bold">{totalPages}</span>
+        </p>
+
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage >= totalPages}
+          className={`bg-red-500 text-white py-2 px-4 rounded-lg transition duration-200 ${currentPage >= totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-600'
+            }`}
+        >
+          Next
+        </button>
+      </div>
+      <div className="flex items-center gap-2">
+        <label htmlFor="perPage" className="text-gray-700">Pokémons per page:</label>
+        <select
+          id="perPage"
+          value={pokemonsPerPage}
+          onChange={handlePokemonsPerPageChange}
+          className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+        >
+          <option value={10}>10</option>
+          <option value={20}>20</option>
+          <option value={30}>30</option>
+        </select>
+      </div>
     </div>
   );
 }

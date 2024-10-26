@@ -6,8 +6,8 @@ import usePaginationStore from "../../store/usePaginationStore";
 import useSortStore from "../../store/useSortStore";
 
 const usePokemonList = () => {
-  const { allPokemons, filteredPokemons, pokemonsPerPage, setAllPokemons, setPokemons } = usePokemonStore();
-  const { currentPage } = usePaginationStore();
+  const { allPokemons, filteredPokemons, setAllPokemons, setPokemons } = usePokemonStore();
+  const { currentPage, pokemonsPerPage } = usePaginationStore();
   const { sortOption } = useSortStore();
 
   const sortPokemons = useCallback((pokemonList: Pokemon[]) => {
@@ -27,17 +27,19 @@ const usePokemonList = () => {
     const pokemonList = await fetchPokemons();
     const sortedPokemons = sortPokemons(pokemonList);
     setAllPokemons(sortedPokemons);
-    setPokemons(sortedPokemons.slice(0, pokemonsPerPage));
+
+    const initialPokemons = sortedPokemons.slice(0, pokemonsPerPage);
+    setPokemons(initialPokemons);
   };
 
   const isEmptyState = (filteredPokemons ? filteredPokemons.length : allPokemons.length) === 0;
-
   const sortedPokemons = filteredPokemons ? sortPokemons(filteredPokemons) : sortPokemons(allPokemons);
-
   const listStart = (currentPage - 1) * pokemonsPerPage;
   const listEnd = listStart + pokemonsPerPage;
+  const displayedPokemons = sortedPokemons.slice(listStart, listEnd);
+  const totalPokemons = filteredPokemons ? filteredPokemons.length : allPokemons.length;
 
-  return { sortPokemons, loadPokemons, isEmptyState, sortedPokemons, listStart, listEnd };
+  return { sortPokemons, loadPokemons, isEmptyState, displayedPokemons, totalPokemons };
 };
 
 export default usePokemonList;
