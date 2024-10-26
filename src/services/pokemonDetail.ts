@@ -1,9 +1,17 @@
+export interface PokemonType {
+  slot: number;
+  type: {
+    name: string;
+  };
+}
+
 export interface PokemonDetailType {
   id: number;
   name: string;
   sprites: {
     front_default: string;
   };
+  types: PokemonType[];
 }
 
 export const fetchPokemonDetail = async (url: string): Promise<PokemonDetailType> => {

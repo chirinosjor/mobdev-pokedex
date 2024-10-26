@@ -10,7 +10,7 @@ function Header() {
           <Logo />
         </div>
         <div className="flex flex-row items-center justify-center sm:flex-1 sm:justify-between">
-          <div className="flex-1 mr-4 sm:mx-4 sm:flex sm:justify-center">
+          <div className="flex-1 mr-4 sm:mx-4 sm:flex sm:justify-center sm:items-center sm:gap-4">
             <Searchbar />
           </div>
           <div className="md:w-32 flex justify-center">

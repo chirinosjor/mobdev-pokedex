@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SORT_OPTIONS } from './constants';
-import useSortStore from '../../../../store/useSortStore';
+import useSortStore from '@store/useSortStore';
 
 const SortButton = () => {
   const [isOpen, setIsOpen] = useState(false);

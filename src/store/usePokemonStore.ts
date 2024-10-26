@@ -1,8 +1,10 @@
 import { create } from 'zustand';
+import { PokemonType } from '@services/pokemonDetail';
 
 export type Pokemon = {
   name: string;
   url: string;
+  types: PokemonType[];
 };
 
 export type PokemonDetailType = {

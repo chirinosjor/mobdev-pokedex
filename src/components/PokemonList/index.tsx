@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import usePokemonStore from '../../store/usePokemonStore';
-import usePaginationStore from '../../store/usePaginationStore';
+import usePokemonStore from '@store/usePokemonStore';
+import usePaginationStore from '@store/usePaginationStore';
 import PokemonDetail from './components/PokemonDetail';
 import EmptyPokemonList from './components/EmptyPokemonList';
 import PokemonListPagination from './components/Pagination';

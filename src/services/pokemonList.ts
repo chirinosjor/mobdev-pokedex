@@ -1,6 +1,9 @@
+import { fetchPokemonDetail, PokemonType } from "./pokemonDetail";
+
 export interface Pokemon {
   name: string;
   url: string;
+  types: PokemonType[];
 }
 
 interface PokemonListResponse {
@@ -23,7 +26,22 @@ export const fetchPokemons = async (limit: number = TOTAL_POKEMONS, offset: numb
 
     const data: PokemonListResponse = await response.json();
 
-    return data.results;
+    const pokemonsWithTypes = await Promise.all(data.results.map(async (pokemon) => {
+      const detail = await fetchPokemonDetail(pokemon.url);
+
+      return {
+        name: pokemon.name,
+        url: pokemon.url,
+        types: detail.types.map((typeInfo: PokemonType) => ({
+          slot: typeInfo.slot,
+          type: {
+            name: typeInfo.type.name,
+          },
+        })),
+      };
+    }));
+
+    return pokemonsWithTypes;
   } catch (error) {
     console.error("Failed to fetch Pokémon list:", error);
     throw error;

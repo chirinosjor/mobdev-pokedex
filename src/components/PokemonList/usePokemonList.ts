@@ -1,9 +1,11 @@
 import { useCallback } from "react";
-import usePokemonStore, { Pokemon } from "../../store/usePokemonStore";
+
+import usePokemonStore, { Pokemon } from "@store/usePokemonStore";
+import { fetchPokemons } from '@services/pokemonList';
+import usePaginationStore from "@store/usePaginationStore";
+import useSortStore from "@store/useSortStore";
+
 import { extractIdFromUrl } from "./utils";
-import { fetchPokemons } from '../../services/pokemonList';
-import usePaginationStore from "../../store/usePaginationStore";
-import useSortStore from "../../store/useSortStore";
 
 const usePokemonList = () => {
   const { allPokemons, filteredPokemons, setAllPokemons, setPokemons } = usePokemonStore();

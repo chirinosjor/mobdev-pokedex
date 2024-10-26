@@ -1,6 +1,8 @@
-import { useState } from 'react';
-import usePokemonStore from '../../../../store/usePokemonStore';
-import usePaginationStore from '../../../../store/usePaginationStore';
+import { useEffect, useState } from 'react';
+
+import usePokemonStore from '@store/usePokemonStore';
+import usePaginationStore from '@store/usePaginationStore';
+import Filters from '../Filters';
 interface SearchbarProps {
   className?: string;
 }
@@ -9,25 +11,31 @@ const Searchbar = ({ className }: SearchbarProps) => {
   const [search, setSearch] = useState('');
   const { allPokemons, setFilteredPokemons, setPokemons } = usePokemonStore();
   const { pokemonsPerPage } = usePaginationStore();
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const query = event.target.value.toLowerCase();
-    setSearch(query);
-
-    if (query === '') {
-      setFilteredPokemons(null);
-      setPokemons(allPokemons.slice(0, pokemonsPerPage));
-      return;
-    }
-
+  useEffect(() => {
     const filtered = allPokemons.filter((pokemon) => {
-      const nameMatch = pokemon.name.toLowerCase().includes(query);
-      const numberMatch = pokemon.url.split('/').slice(-2, -1)[0] === query;
-      return nameMatch || numberMatch;
+      const nameMatch = pokemon.name.toLowerCase().includes(search.toLowerCase());
+      const numberMatch = pokemon.url.split('/').slice(-2, -1)[0] === search;
+      const normalizedSelectedTypes = selectedTypes.map(type => type.toLowerCase());
+
+      const typeMatch = normalizedSelectedTypes.length === 0 ||
+        pokemon.types.some(typeInfo => normalizedSelectedTypes.includes(typeInfo.type.name.toLowerCase()));
+
+      if (search === '') {
+        return typeMatch;
+      }
+
+      return (nameMatch || numberMatch) && typeMatch;
     });
 
     setFilteredPokemons(filtered);
     setPokemons(filtered.slice(0, pokemonsPerPage));
+  }, [search, selectedTypes, allPokemons, setFilteredPokemons, setPokemons, pokemonsPerPage]);
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearch(query);
   };
 
   return (
@@ -38,6 +46,7 @@ const Searchbar = ({ className }: SearchbarProps) => {
         onChange={handleSearch}
         className="w-full px-4 py-2 text-gray-700 outline-none"
       />
+      <Filters selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} />
     </div>
   );
 };
