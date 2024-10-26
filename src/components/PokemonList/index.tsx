@@ -1,38 +1,31 @@
 import { useEffect } from 'react';
-import { fetchPokemons, TOTAL_POKEMONS } from '../../services/pokemonList';
+import { TOTAL_POKEMONS } from '../../services/pokemonList';
 import usePokemonStore from '../../store/usePokemonStore';
+import usePaginationStore from '../../store/usePaginationStore';
 import PokemonDetail from './components/PokemonDetail';
 import EmptyPokemonList from './components/EmptyPokemonList';
 import PokemonListPagination from './components/Pagination';
-import usePaginationStore from '../../store/usePaginationStore';
+import usePokemonList from './usePokemonList';
+import useSortStore from '../../store/useSortStore';
 
 function PokemonList() {
   const { allPokemons, filteredPokemons, pokemons, setAllPokemons, setPokemons } = usePokemonStore();
+  const { sortOption } = useSortStore();
   const { currentPage, pokemonsPerPage, setCurrentPage } = usePaginationStore();
+  const { listStart, listEnd, isEmptyState, sortPokemons, loadPokemons } = usePokemonList();
 
   const totalPokemons = filteredPokemons ? filteredPokemons.length : TOTAL_POKEMONS;
 
   useEffect(() => {
-    const loadPokemons = async () => {
-      const pokemonList = await fetchPokemons();
-      setAllPokemons(pokemonList);
-      setPokemons(pokemonList.slice(0, pokemonsPerPage));
-    };
     if (allPokemons.length === 0) {
       loadPokemons();
     }
-  }, [allPokemons, setAllPokemons, setPokemons, pokemonsPerPage]);
+  }, [allPokemons, setAllPokemons, setPokemons, pokemonsPerPage, sortPokemons, loadPokemons]);
 
   useEffect(() => {
-    const start = (currentPage - 1) * pokemonsPerPage;
-    const end = start + pokemonsPerPage;
-
-    if (filteredPokemons) {
-      setPokemons(filteredPokemons.slice(start, end));
-    } else {
-      setPokemons(allPokemons.slice(start, end));
-    }
-  }, [currentPage, filteredPokemons, allPokemons, pokemonsPerPage, setPokemons]);
+    const sortedPokemons = filteredPokemons ? sortPokemons(filteredPokemons) : sortPokemons(allPokemons);
+    setPokemons(sortedPokemons.slice(listStart, listEnd));
+  }, [currentPage, filteredPokemons, allPokemons, pokemonsPerPage, setPokemons, sortPokemons, sortOption, listStart, listEnd]);
 
   useEffect(() => {
     if (filteredPokemons) {
@@ -40,9 +33,7 @@ function PokemonList() {
     }
   }, [filteredPokemons, setCurrentPage]);
 
-  if (totalPokemons === 0) {
-    return <EmptyPokemonList />;
-  }
+  if (isEmptyState) { return <EmptyPokemonList />; }
 
   return (
     <div className="flex flex-col h-full md:min-h[750px]">
