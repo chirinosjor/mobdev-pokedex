@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import usePokemonStore from '@store/usePokemonStore';
 import usePaginationStore from '@store/usePaginationStore';
 import PokemonDetail from './components/PokemonDetail';
-import EmptyPokemonList from './components/EmptyPokemonList';
+import StatePokemonList from './components/StatePokemonList';
 import PokemonListPagination from './components/Pagination';
 import usePokemonList from './usePokemonList';
 import { Pokemon } from '@store/usePokemonStore';
 import PokemonModalContent from './components/PokemonModalContent';
+import emptystate from "@assets/emptyState.png";
+import loadingGif from "@assets/loading.gif";
 
 function PokemonList() {
   const { allPokemons, filteredPokemons, isLoading } = usePokemonStore();
@@ -26,14 +28,12 @@ function PokemonList() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-full">
-        <p>Loading...</p>
-      </div>
+      <StatePokemonList title="Loading..." imgSrc={loadingGif} />
     );
   }
 
   if (!isLoading && isEmptyState) {
-    return <EmptyPokemonList />;
+    return <StatePokemonList title="We couldn't find any Pokémon, try searching for something else." imgSrc={emptystate} />;
   }
 
   return (
