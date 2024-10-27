@@ -1,6 +1,6 @@
 import { SlidersHorizontal } from 'lucide-react';
 import { useState } from 'react';
-import { POKEMON_TYPES } from './constants';
+import { POKEMON_TYPES } from '@constants/pokemonTypes';
 
 interface FiltersProps {
   selectedTypes: string[];

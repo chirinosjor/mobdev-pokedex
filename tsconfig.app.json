@@ -24,7 +24,9 @@
     "paths": {
       "@store/*": ["src/store/*"],
       "@components/*": ["src/components/*"],
-      "@services/*": ["src/services/*"]
+      "@services/*": ["src/services/*"],
+      "@assets/*": ["src/assets/*"],
+      "@constants/*": ["src/constants/*"]
     }
   },
   "include": ["src"]
