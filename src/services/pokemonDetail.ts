@@ -11,6 +11,13 @@ export interface PokemonAbility {
   };
 }
 
+export interface PokemonStat {
+  base_stat: number;
+  stat: {
+    name: string;
+  };
+}
+
 export interface PokemonDetailType {
   id: number;
   name: string;
@@ -21,6 +28,11 @@ export interface PokemonDetailType {
   abilities: PokemonAbility[];
   height: number;
   weight: number;
+  stats: PokemonStat[];
+  species: {
+    name: string;
+    url: string;
+  };
 }
 
 export const fetchPokemonDetail = async (url: string): Promise<PokemonDetailType> => {
@@ -32,4 +44,20 @@ export const fetchPokemonDetail = async (url: string): Promise<PokemonDetailType
 
   const data: PokemonDetailType = await response.json();
   return data;
+};
+
+export const fetchPokemonDescription = async (speciesUrl: string): Promise<string> => {
+  const response = await fetch(speciesUrl);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch Pokémon description: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+
+  const englishEntry = data.flavor_text_entries.find(
+    (entry: { language: { name: string; }; }) => entry.language.name === "en"
+  );
+
+  return englishEntry ? englishEntry.flavor_text : "Description not found.";
 };
