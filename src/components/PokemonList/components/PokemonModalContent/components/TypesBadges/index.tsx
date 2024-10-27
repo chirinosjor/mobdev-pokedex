@@ -1,5 +1,6 @@
 import { POKEMON_TYPE_COLORS, PokemonTypeKey } from '@constants/pokemonTypes';
 import { PokemonType } from '@services/pokemonDetail';
+import { capitalizeFirstLetter } from '@utils/string';
 
 function TypesBadges({ types }: { types: PokemonType[]; }) {
   return (
@@ -14,7 +15,7 @@ function TypesBadges({ types }: { types: PokemonType[]; }) {
               className="text-white px-4 py-1 rounded-full text-sm"
               key={type.name}
             >
-              {type.name.charAt(0).toUpperCase() + type.name.slice(1)}
+              {capitalizeFirstLetter(type.name)}
             </span>
           );
         })}

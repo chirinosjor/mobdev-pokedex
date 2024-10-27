@@ -1,4 +1,5 @@
 import { Pokemon } from "@store/usePokemonStore";
+import { capitalizeFirstLetter } from "@utils/string";
 
 interface HeaderSectionProps {
   name: string;
@@ -11,7 +12,7 @@ function HeaderSection({ name, id, setSelectedPokemon }: HeaderSectionProps) {
     <header className="w-full flex justify-between items-center text-white text-lg font-bold">
       <button className="text-2xl" onClick={() => setSelectedPokemon(null)}>&larr;</button>
       <span className="text-3xl font-extrabold text-white drop-shadow-lg">
-        {name && name.charAt(0).toUpperCase() + name.slice(1)}
+        {name && capitalizeFirstLetter(name)}
       </span>
       <span>{`#${id?.toString().padStart(3, '0')}`}</span>
     </header>
