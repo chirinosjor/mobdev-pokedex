@@ -2,26 +2,28 @@ export const POKEMON_TYPES = [
   'Grass', 'Fire', 'Water', 'Bug', 'Normal',
   'Poison', 'Electric', 'Ground', 'Fairy',
   'Fighting', 'Psychic', 'Rock', 'Ghost',
-  'Ice', 'Dragon', 'Steel',
+  'Ice', 'Dragon', 'Steel', 'Flying',
 ];
 
 export const POKEMON_TYPE_COLORS = {
-  grass: { normal: 'green-400', darker: 'green-600' },
-  fire: { normal: 'orange-500', darker: 'orange-700' },
-  water: { normal: 'blue-400', darker: 'blue-600' },
-  bug: { normal: 'lime-500', darker: 'lime-700' },
-  normal: { normal: 'gray-400', darker: 'gray-600' },
-  poison: { normal: 'purple-500', darker: 'purple-700' },
-  electric: { normal: 'yellow-400', darker: 'yellow-600' },
-  ground: { normal: 'yellow-600', darker: 'yellow-800' },
-  fairy: { normal: 'pink-300', darker: 'pink-500' },
-  fighting: { normal: 'red-500', darker: 'red-700' },
-  psychic: { normal: 'pink-400', darker: 'pink-600' },
-  rock: { normal: 'amber-500', darker: 'amber-700' },
-  ghost: { normal: 'indigo-500', darker: 'indigo-700' },
-  ice: { normal: 'cyan-300', darker: 'cyan-500' },
-  dragon: { normal: 'purple-600', darker: 'purple-800' },
-  steel: { normal: 'gray-500', darker: 'gray-700' },
+  grass: { normal: '#4caf50', darker: '#388e3c' },
+  fire: { normal: '#ff9800', darker: '#f57c00' },
+  water: { normal: '#2196f3', darker: '#1976d2' },
+  bug: { normal: '#a4d65e', darker: '#7b9a2a' },
+  normal: { normal: '#9e9e9e', darker: '#757575' },
+  poison: { normal: '#9c27b0', darker: '#7b1fa2' },
+  electric: { normal: '#ffeb3b', darker: '#fbc02d' },
+  ground: { normal: '#e2b500', darker: '#c58f00' },
+  fairy: { normal: '#f48fb1', darker: '#f06292' },
+  fighting: { normal: '#f44336', darker: '#c62828' },
+  psychic: { normal: '#e91e63', darker: '#d81b60' },
+  rock: { normal: '#ffb74d', darker: '#ffa726' },
+  ghost: { normal: '#3f51b5', darker: '#303f9f' },
+  ice: { normal: '#81d4fa', darker: '#4fc3f7' },
+  dragon: { normal: '#673ab7', darker: '#512da8' },
+  steel: { normal: '#9e9e9e', darker: '#757575' },
+  flying: { normal: '#009688', darker: '#00695c' },
 } as const;
 
-export type PokemonTypeKey = keyof typeof POKEMON_TYPE_COLORS; // This will be a union of the keys
+
+export type PokemonTypeKey = keyof typeof POKEMON_TYPE_COLORS;

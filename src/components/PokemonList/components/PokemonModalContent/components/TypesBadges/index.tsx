@@ -10,7 +10,8 @@ function TypesBadges({ types }: { types: PokemonType[]; }) {
           const typeColor = POKEMON_TYPE_COLORS[typeKey];
           return (
             <span
-              className={`bg-${typeColor?.darker || 'gray-700'} text-white px-4 py-1 rounded-full text-sm`}
+              style={{ backgroundColor: typeColor?.normal }}
+              className="text-white px-4 py-1 rounded-full text-sm"
               key={type.name}
             >
               {type.name.charAt(0).toUpperCase() + type.name.slice(1)}

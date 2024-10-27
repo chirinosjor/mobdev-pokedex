@@ -51,7 +51,7 @@ const PokemonModalContent = ({ pokemon, setSelectedPokemon }: PokemonModalConten
   }, [pokemonDetails, setDescriptionLoading, setPokemonDescription]);
 
   return (
-    <div className={`bg-${typeColors?.normal || 'gray-500'} flex flex-col items-center pt-6 px-4 relative`}>
+    <div style={{ backgroundColor: typeColors?.normal }} className={`bg-${typeColors?.normal || 'gray-500'} flex flex-col items-center pt-6 px-4 relative`}>
       <HeaderSection name={name} id={id} setSelectedPokemon={setSelectedPokemon} />
       <div className="mt-36 flex flex-col justify-end items-center bg-white rounded-3xl w-full h-[600px] pb-4">
         <ImageSection sprites={sprites} name={name} />

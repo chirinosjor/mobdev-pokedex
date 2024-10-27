@@ -20,13 +20,14 @@ function StatsSection({ pokemonStats, typeColors }: StatsSectionProps) {
       <div className="w-full px-6 mt-4 space-y-2">
         {pokemonStats.map((stat, index) => (
           <div key={index} className="flex items-center gap-2">
-            <span className={`text-${typeColors?.darker || 'gray-700'} w-24 text-sm font-semibold`}>{stat.label}</span>
+            <span style={{ color: typeColors?.normal }}
+              className="w-24 text-sm font-semibold">{stat.label}</span>
             <span className="text-gray-600">{stat.value}</span>
             <div className="w-full h-2 bg-green-200 rounded-full overflow-hidden">
               {stat.value && (
                 <div
-                  className={`bg-${typeColors?.darker || 'gray-700'} h-full`}
-                  style={{ width: `${stat.value / 1.5}%` }}
+                  className="h-full"
+                  style={{ width: `${stat.value / 1.5}%`, backgroundColor: typeColors?.normal }}
                 ></div>
               )}
             </div>
