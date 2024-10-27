@@ -4,13 +4,17 @@ import { extractIdFromUrl } from '../../utils';
 
 interface PokemonDetailProps {
   pokemon: Pokemon;
+  onClick: () => void;
 }
 
-const PokemonDetail: React.FC<PokemonDetailProps> = ({ pokemon }) => {
+const PokemonDetail: React.FC<PokemonDetailProps> = ({ pokemon, onClick }) => {
   const pokemonId = extractIdFromUrl(pokemon.url);
 
   return (
-    <div className="w-40 h-48 rounded-lg shadow-lg overflow-hidden relative">
+    <div
+      className="w-40 h-48 rounded-lg shadow-lg overflow-hidden relative cursor-pointer transition-transform hover:scale-105"
+      onClick={onClick}
+    >
       <div className="absolute top-2 left-2 bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded-full">
         #{pokemonId.toString().padStart(3, '0')}
       </div>

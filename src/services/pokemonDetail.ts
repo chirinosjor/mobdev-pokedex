@@ -5,6 +5,12 @@ export interface PokemonType {
   };
 }
 
+export interface PokemonAbility {
+  ability: {
+    name: string;
+  };
+}
+
 export interface PokemonDetailType {
   id: number;
   name: string;
@@ -12,6 +18,9 @@ export interface PokemonDetailType {
     front_default: string;
   };
   types: PokemonType[];
+  abilities: PokemonAbility[];
+  height: number;
+  weight: number;
 }
 
 export const fetchPokemonDetail = async (url: string): Promise<PokemonDetailType> => {

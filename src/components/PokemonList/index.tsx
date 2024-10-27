@@ -1,15 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import usePokemonStore from '@store/usePokemonStore';
 import usePaginationStore from '@store/usePaginationStore';
 import PokemonDetail from './components/PokemonDetail';
 import EmptyPokemonList from './components/EmptyPokemonList';
 import PokemonListPagination from './components/Pagination';
 import usePokemonList from './usePokemonList';
+import { Pokemon } from '@store/usePokemonStore';
+import PokemonModalContent from './components/PokemonModalContent';
 
 function PokemonList() {
   const { allPokemons, filteredPokemons, isLoading } = usePokemonStore();
   const { currentPage, pokemonsPerPage, setCurrentPage, setPokemonsPerPage } = usePaginationStore();
   const { displayedPokemons, loadPokemons, isEmptyState, totalPokemons } = usePokemonList();
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
 
   useEffect(() => {
     if (allPokemons.length === 0) {
@@ -39,7 +42,10 @@ function PokemonList() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 p-4">
           {displayedPokemons.map((pokemon, index) => (
             <div key={index} className="flex justify-center">
-              <PokemonDetail pokemon={pokemon} />
+              <PokemonDetail
+                pokemon={pokemon}
+                onClick={() => setSelectedPokemon(pokemon)}
+              />
             </div>
           ))}
         </div>
@@ -53,6 +59,11 @@ function PokemonList() {
           setPokemonsPerPage={setPokemonsPerPage}
         />
       </div>
+      {selectedPokemon && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          {selectedPokemon && <PokemonModalContent pokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} />}
+        </div>
+      )}
     </div>
   );
 }
