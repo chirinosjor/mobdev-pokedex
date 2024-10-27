@@ -34,31 +34,27 @@ function PokemonListPagination({
   };
 
   return (
-    <div className="flex flex-col md:flex-row mt-4 gap-4 justify-center items-center">
-      <div className="flex gap-4">
+    <div className="flex flex-col sm:flex-row justify-center items-center p-4 space-y-4 sm:space-y-0 sm:space-x-4">
+      <div className="flex items-center justify-center space-x-2">
         <button
           onClick={handlePrevPage}
           disabled={currentPage === 1}
-          className={`bg-red-500 text-white py-2 px-4 rounded-lg transition duration-200 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-600'
-            }`}
+          className={`bg-red-500 text-white py-2 px-4 rounded-lg transition duration-200 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-600'}`}
         >
           Previous
         </button>
-
-        <p className="text-center text-gray-500 flex items-center gap-2">
+        <p className="text-center text-gray-500">
           Page <span className="font-bold">{currentPage}</span> of <span className="font-bold">{totalPages}</span>
         </p>
-
         <button
           onClick={handleNextPage}
           disabled={currentPage >= totalPages}
-          className={`bg-red-500 text-white py-2 px-4 rounded-lg transition duration-200 ${currentPage >= totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-600'
-            }`}
+          className={`bg-red-500 text-white py-2 px-4 rounded-lg transition duration-200 ${currentPage >= totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-600'}`}
         >
           Next
         </button>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-center space-x-2">
         <label htmlFor="perPage" className="text-gray-700">Pokémons per page:</label>
         <select
           id="perPage"

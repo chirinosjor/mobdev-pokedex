@@ -7,7 +7,7 @@ import PokemonListPagination from './components/Pagination';
 import usePokemonList from './usePokemonList';
 
 function PokemonList() {
-  const { allPokemons, filteredPokemons } = usePokemonStore();
+  const { allPokemons, filteredPokemons, isLoading } = usePokemonStore();
   const { currentPage, pokemonsPerPage, setCurrentPage, setPokemonsPerPage } = usePaginationStore();
   const { displayedPokemons, loadPokemons, isEmptyState, totalPokemons } = usePokemonList();
 
@@ -21,28 +21,38 @@ function PokemonList() {
     setCurrentPage(1);
   }, [filteredPokemons, setCurrentPage]);
 
-  if (isEmptyState) { return <EmptyPokemonList />; }
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (!isLoading && isEmptyState) {
+    return <EmptyPokemonList />;
+  }
 
   return (
-    <div className="flex flex-col h-full md:min-h[750px]">
-      <div className="flex-grow">
-        <div className="h-[650px] sm:h-[700px] md:h-[750px] overflow-y-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 justify-items-center sm:my-4 md:my-8 lg:my-12">
-            {displayedPokemons.map((pokemon, index) => (
-              <div key={index} className="flex justify-center">
-                <PokemonDetail pokemon={pokemon} />
-              </div>
-            ))}
-          </div>
+    <div className="flex flex-col h-full">
+      <div className="flex-grow overflow-y-auto pb-20">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 p-4">
+          {displayedPokemons.map((pokemon, index) => (
+            <div key={index} className="flex justify-center">
+              <PokemonDetail pokemon={pokemon} />
+            </div>
+          ))}
         </div>
       </div>
-      <PokemonListPagination
-        currentPage={currentPage}
-        totalPokemons={totalPokemons}
-        pokemonsPerPage={pokemonsPerPage}
-        setCurrentPage={setCurrentPage}
-        setPokemonsPerPage={setPokemonsPerPage}
-      />
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+        <PokemonListPagination
+          currentPage={currentPage}
+          totalPokemons={totalPokemons}
+          pokemonsPerPage={pokemonsPerPage}
+          setCurrentPage={setCurrentPage}
+          setPokemonsPerPage={setPokemonsPerPage}
+        />
+      </div>
     </div>
   );
 }

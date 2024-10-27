@@ -2,13 +2,14 @@ import { useCallback } from "react";
 
 import usePokemonStore, { Pokemon } from "@store/usePokemonStore";
 import { fetchPokemons } from '@services/pokemonList';
+import { fetchPokemonDetail } from '@services/pokemonDetail';
 import usePaginationStore from "@store/usePaginationStore";
 import useSortStore from "@store/useSortStore";
 
 import { extractIdFromUrl } from "./utils";
 
 const usePokemonList = () => {
-  const { allPokemons, filteredPokemons, setAllPokemons, setPokemons } = usePokemonStore();
+  const { allPokemons, filteredPokemons, setAllPokemons, setPokemons, setIsLoading } = usePokemonStore();
   const { currentPage, pokemonsPerPage } = usePaginationStore();
   const { sortOption } = useSortStore();
 
@@ -25,14 +26,29 @@ const usePokemonList = () => {
     });
   }, [sortOption]);
 
-  const loadPokemons = async () => {
-    const pokemonList = await fetchPokemons();
-    const sortedPokemons = sortPokemons(pokemonList);
-    setAllPokemons(sortedPokemons);
+  const loadPokemons = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const pokemonList = await fetchPokemons();
+      const detailedPokemonList = await Promise.all(
+        pokemonList.map(async (pokemon) => {
+          const details = await fetchPokemonDetail(pokemon.url);
+          return {
+            ...pokemon,
+            types: details.types,
+            sprites: details.sprites
+          };
+        })
+      );
+      const sortedPokemons = sortPokemons(detailedPokemonList);
+      setAllPokemons(sortedPokemons);
 
-    const initialPokemons = sortedPokemons.slice(0, pokemonsPerPage);
-    setPokemons(initialPokemons);
-  };
+      const initialPokemons = sortedPokemons.slice(0, pokemonsPerPage);
+      setPokemons(initialPokemons);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [setIsLoading, sortPokemons, setAllPokemons, setPokemons, pokemonsPerPage]);
 
   const isEmptyState = (filteredPokemons ? filteredPokemons.length : allPokemons.length) === 0;
   const sortedPokemons = filteredPokemons ? sortPokemons(filteredPokemons) : sortPokemons(allPokemons);

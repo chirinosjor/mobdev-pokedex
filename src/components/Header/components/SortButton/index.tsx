@@ -17,7 +17,7 @@ const SortButton = () => {
   };
 
   return (
-    <div>
+    <div className="relative">
       <button
         onClick={toggleDropdown}
         className="bg-white text-red-500 rounded-full p-2 shadow-lg focus:outline-none h-10 w-10"
@@ -25,7 +25,7 @@ const SortButton = () => {
         {SORT_OPTIONS[sortOption]}
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
           <div className="py-1">
             <button
               onClick={() => handleSortSelection('name')}
