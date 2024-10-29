@@ -1,50 +1,36 @@
-# React + TypeScript + Vite
+# Pokedex Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **Pokedex Project!** This project was created as part of the MobDev Challenge for a frontend developer job offer. It showcases a Pokedex interface where users can explore Pokémon details, inspired by the classic Pokédex from the Pokémon series.
 
-Currently, two official plugins are available:
+## Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project is built with **Vite** and **React** to provide a fast and modern front-end development experience. The design of the Pokedex was inspired by [this figma design](https://www.figma.com/community/file/979132880663340794)
 
-## Expanding the ESLint configuration
+## How to Set Up and Run the Project
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Follow these steps to set up and run the project locally.
 
-- Configure the top-level `parserOptions` property like this:
+1. Clone the Repository
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Start by cloning the repository to your local machine using the following command:
+`git clone https://github.com/chirinosjor/mobdev-pokedex.git`
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Navigate into the Project Directory
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Change into the project folder:
+`cd mobdev-pokedex`
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+3. Install Dependencies
+
+Make sure you have Node.js installed. Then, in the project directory, install the dependencies by running:
+`npm install`
+
+4. Start the Development Server
+
+Start the Vite development server with:
+`npm run dev`
+
+This command should start the project locally. By default, Vite will serve the application on http://localhost:3000. Open this link in your browser to see the project.
+
+Credits
+This project was designed and developed by Jorge Chirinos.
