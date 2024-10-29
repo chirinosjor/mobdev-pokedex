@@ -23,14 +23,14 @@ describe("PokemonList", () => {
   });
 
   describe("loading state", () => {
-    it("displays loading state", () => {
+    test("displays loading state", () => {
       setupMockStore({ isLoading: true });
 
       const { getByText } = render(<PokemonList />);
       expect(getByText(/loading/i)).toBeInTheDocument();
     });
 
-    it("displays empty state when no Pokémon are found", () => {
+    test("displays empty state when no Pokémon are found", () => {
       setupMockStore({ isLoading: false });
 
       const { getByText } = render(<PokemonList />);
@@ -43,7 +43,7 @@ describe("PokemonList", () => {
   });
 
   describe("rendering Pokémon", () => {
-    it("renders a list of Pokémon", () => {
+    test("renders a list of Pokémon", () => {
       const mockPokemons = [
         {
           name: "Pikachu",
@@ -88,7 +88,7 @@ describe("PokemonList", () => {
       }));
     });
 
-    it("renders pagination correctly with one page", () => {
+    test("renders pagination correctly with one page", () => {
       const mockPokemons = Array.from({ length: 20 }, (_, index) => ({
         name: `Pokemon ${index + 1}`,
         url: `https://pokeapi.co/api/v2/pokemon/${index + 1}/`,
@@ -104,15 +104,11 @@ describe("PokemonList", () => {
         isLoading: false,
       });
 
-      const { getByText, getByRole, container } = render(<PokemonList />);
-      const paginationText = getByText(/Page/i, { selector: "p" });
-      const pageNumberElement = container.querySelector("span.font-bold");
-      const ofText = getByText(/of/i);
+      const { getByText, getByRole } = render(<PokemonList />);
 
-      expect(paginationText).toBeInTheDocument();
-      expect(pageNumberElement).toBeInTheDocument();
-      expect(pageNumberElement).toHaveTextContent("1");
-      expect(ofText).toBeInTheDocument();
+      expect(getByText(/Page/i, { selector: "p" })).toHaveTextContent(
+        "Page 1 of 1"
+      );
 
       const nextButton = getByRole("button", { name: /next/i });
       const prevButton = getByRole("button", { name: /previous/i });
@@ -121,7 +117,7 @@ describe("PokemonList", () => {
       expect(prevButton).toBeDisabled();
     });
 
-    it("renders pagination correctly with multiple pages", () => {
+    test("renders pagination correctly with multiple pages", () => {
       const mockPokemons = Array.from({ length: 100 }, (_, index) => ({
         name: `Pokemon ${index + 1}`,
         url: `https://pokeapi.co/api/v2/pokemon/${index + 1}/`,
@@ -144,18 +140,11 @@ describe("PokemonList", () => {
         setPokemonsPerPage: mockSetPokemonsPerPage,
       }));
 
-      const { getByText, getByRole, container } = render(<PokemonList />);
-      const paginationText = getByText(/Page/i, { selector: "p" });
-      const pageNumberElements = container.querySelectorAll("span.font-bold");
-      const ofText = getByText(/of/i);
-      const firstPageNumber = pageNumberElements[0];
-      const secondPageNumber = pageNumberElements[1];
+      const { getByText, getByRole } = render(<PokemonList />);
 
-      expect(pageNumberElements.length).toBe(2);
-      expect(paginationText).toBeInTheDocument();
-      expect(firstPageNumber).toHaveTextContent("1");
-      expect(ofText).toBeInTheDocument();
-      expect(secondPageNumber).toHaveTextContent("5");
+      expect(getByText(/Page/i, { selector: "p" })).toHaveTextContent(
+        "Page 1 of 5"
+      );
 
       const nextButton = getByRole("button", { name: /next/i });
       const prevButton = getByRole("button", { name: /previous/i });
