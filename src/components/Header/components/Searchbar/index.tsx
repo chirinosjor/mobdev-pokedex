@@ -13,7 +13,7 @@ const Searchbar = ({ className }: SearchbarProps) => {
   const { allPokemons, setFilteredPokemons, setPokemons } = usePokemonStore();
   const { pokemonsPerPage } = usePaginationStore();
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const { backgroundColor } = useTheme();
+  const { backgroundColor, contrastTextColor } = useTheme();
 
   useEffect(() => {
     const filtered = allPokemons.filter((pokemon) => {
@@ -46,7 +46,7 @@ const Searchbar = ({ className }: SearchbarProps) => {
         placeholder="Search by name or number..."
         value={search}
         onChange={handleSearch}
-        className={`${backgroundColor} w-full px-4 py-2 text-gray-700 outline-none`}
+        className={`${backgroundColor} ${contrastTextColor} w-full px-4 py-2 outline-none`}
       />
       <Filters selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} />
     </div>
