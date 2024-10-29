@@ -9,12 +9,14 @@ import { Pokemon } from '@store/usePokemonStore';
 import PokemonModalContent from './components/PokemonModalContent';
 import emptystate from "@assets/emptyState.png";
 import loadingGif from "@assets/loading.gif";
+import useTheme from '@store/useTheme';
 
 function PokemonList() {
   const { allPokemons, filteredPokemons, isLoading } = usePokemonStore();
   const { currentPage, pokemonsPerPage, setCurrentPage, setPokemonsPerPage } = usePaginationStore();
   const { displayedPokemons, loadPokemons, isEmptyState, totalPokemons } = usePokemonList();
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+  const { isDarkMode } = useTheme();
 
   useEffect(() => {
     if (allPokemons.length === 0) {
@@ -37,7 +39,7 @@ function PokemonList() {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className={`${isDarkMode ? 'bg-slate-700' : 'bg-white'} flex flex-col h-full`}>
       <div className="flex-grow overflow-y-auto pb-20">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 p-4">
           {displayedPokemons.map((pokemon, index) => (
@@ -50,7 +52,7 @@ function PokemonList() {
           ))}
         </div>
       </div>
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+      <div className="fixed bottom-0 left-0 right-0">
         <PokemonListPagination
           currentPage={currentPage}
           totalPokemons={totalPokemons}

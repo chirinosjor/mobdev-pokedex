@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import usePokemonStore from '@store/usePokemonStore';
 import usePaginationStore from '@store/usePaginationStore';
 import Filters from '../Filters';
+import useTheme from '@store/useTheme';
 interface SearchbarProps {
   className?: string;
 }
@@ -12,6 +13,7 @@ const Searchbar = ({ className }: SearchbarProps) => {
   const { allPokemons, setFilteredPokemons, setPokemons } = usePokemonStore();
   const { pokemonsPerPage } = usePaginationStore();
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const { backgroundColor } = useTheme();
 
   useEffect(() => {
     const filtered = allPokemons.filter((pokemon) => {
@@ -39,12 +41,12 @@ const Searchbar = ({ className }: SearchbarProps) => {
   };
 
   return (
-    <div className={`flex items-center w-full sm:max-w-md bg-white rounded-full shadow-md p-2 ${className}`}>
+    <div className={`${backgroundColor} flex items-center w-full sm:max-w-md rounded-full shadow-md p-2 ${className}`}>
       <input
         placeholder="Search by name or number..."
         value={search}
         onChange={handleSearch}
-        className="w-full px-4 py-2 text-gray-700 outline-none"
+        className={`${backgroundColor} w-full px-4 py-2 text-gray-700 outline-none`}
       />
       <Filters selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} />
     </div>

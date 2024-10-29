@@ -1,3 +1,4 @@
+import useTheme from '@store/useTheme';
 import { capitalizeFirstLetter } from '@utils/string';
 
 interface PokemonStats {
@@ -26,9 +27,10 @@ const formatLabel = (label: string) => {
 };
 
 function StatsSection({ pokemonStats, typeColors }: StatsSectionProps) {
+  const { contrastTextColor } = useTheme();
   return (
     <>
-      <h2 className="text-lg font-semibold mt-6">Base Stats</h2>
+      <h2 className={`${contrastTextColor} text-lg font-semibold mt-6`}>Base Stats</h2>
       <div className="w-full px-6 mt-4 space-y-2">
         {pokemonStats.map((stat, index) => (
           <div key={index} className="flex items-center gap-2">
@@ -36,7 +38,7 @@ function StatsSection({ pokemonStats, typeColors }: StatsSectionProps) {
               style={{ color: typeColors?.normal }}
               className="w-24 text-sm font-semibold"
             >
-              {formatLabel(stat.label)} {/* Use the mapping function */}
+              {formatLabel(stat.label)}
             </span>
             <span className="text-gray-600">{stat.value}</span>
             <div className="w-full h-2 bg-green-200 rounded-full overflow-hidden">

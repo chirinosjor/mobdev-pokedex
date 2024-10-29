@@ -1,3 +1,5 @@
+import useTheme from "@store/useTheme";
+
 interface PokemonListPaginationProps {
   currentPage: number;
   totalPokemons: number;
@@ -13,6 +15,7 @@ function PokemonListPagination({
   pokemonsPerPage,
   setPokemonsPerPage,
 }: PokemonListPaginationProps) {
+  const { backgroundColor, contrastTextColor } = useTheme();
   const totalPages = Math.ceil(totalPokemons / pokemonsPerPage);
 
   const handleNextPage = () => {
@@ -34,7 +37,7 @@ function PokemonListPagination({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row justify-center items-center p-4 space-y-4 sm:space-y-0 sm:space-x-4">
+    <div className={`${backgroundColor} flex flex-col sm:flex-row justify-center items-center p-4 space-y-4 sm:space-y-0 sm:space-x-4`}>
       <div className="flex items-center justify-center space-x-2">
         <button
           onClick={handlePrevPage}
@@ -43,7 +46,7 @@ function PokemonListPagination({
         >
           Previous
         </button>
-        <p className="text-center text-gray-500">
+        <p className={`${contrastTextColor} text-center`}>
           Page <span className="font-bold">{currentPage}</span> of <span className="font-bold">{totalPages}</span>
         </p>
         <button
@@ -55,7 +58,7 @@ function PokemonListPagination({
         </button>
       </div>
       <div className="flex items-center justify-center space-x-2">
-        <label htmlFor="perPage" className="text-gray-700">Pokémons per page:</label>
+        <label htmlFor="perPage" className={`${contrastTextColor} text-gray-700`}>Pokémons per page:</label>
         <select
           id="perPage"
           value={pokemonsPerPage}

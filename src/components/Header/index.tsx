@@ -1,6 +1,7 @@
 import SortButton from "./components/SortButton";
 import Logo from "./components/Logo";
 import Searchbar from "./components/Searchbar";
+import DarkModeSwitch from "./components/DarkModeSwitch";
 
 function Header() {
   return (
@@ -13,7 +14,8 @@ function Header() {
           <div className="flex-1 mr-4 sm:mx-4 sm:flex sm:justify-center sm:items-center sm:gap-4">
             <Searchbar />
           </div>
-          <div className="md:w-32 flex justify-center">
+          <div className="md:w-32 flex justify-center gap-4">
+            <DarkModeSwitch />
             <SortButton />
           </div>
         </div>

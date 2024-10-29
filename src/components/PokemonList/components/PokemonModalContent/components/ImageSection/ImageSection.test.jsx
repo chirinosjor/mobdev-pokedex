@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import ImageSection from "../ImageSection"; // Adjust the import path as necessary
+import ImageSection from "../ImageSection";
 import "@testing-library/jest-dom";
 
 describe("ImageSection", () => {
@@ -13,7 +13,6 @@ describe("ImageSection", () => {
 
     render(<ImageSection sprites={sprites} name={name} />);
 
-    // Check if the image is rendered with the correct src
     const imgElement = screen.getByRole("img");
     expect(imgElement).toHaveAttribute("src", sprites.front_default);
     expect(imgElement).toHaveAttribute("alt", name);
@@ -22,7 +21,6 @@ describe("ImageSection", () => {
   test("does not render an image when sprites are null", () => {
     render(<ImageSection sprites={null} name={name} />);
 
-    // Check if the image is not in the document
     const imgElement = screen.queryByRole("img");
     expect(imgElement).not.toBeInTheDocument();
   });

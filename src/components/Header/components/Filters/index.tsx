@@ -1,6 +1,7 @@
 import { SlidersHorizontal } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { POKEMON_TYPES } from '@constants/pokemonTypes';
+import useTheme from '@store/useTheme';
 
 interface FiltersProps {
   selectedTypes: string[];
@@ -9,9 +10,11 @@ interface FiltersProps {
 
 function Filters({ selectedTypes, setSelectedTypes }: FiltersProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { isDarkMode, backgroundColor, contrastTextColor } = useTheme();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const handleTypeChange = (type: string) => {
@@ -24,11 +27,24 @@ function Filters({ selectedTypes, setSelectedTypes }: FiltersProps) {
     });
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
-        className="relative bg-white text-red-500 rounded-full p-2 shadow-lg focus:outline-none"
+        className={`${backgroundColor} relative text-red-500 rounded-full p-2 shadow-lg focus:outline-none`}
       >
         <SlidersHorizontal />
         {selectedTypes.length > 0 && (
@@ -38,10 +54,10 @@ function Filters({ selectedTypes, setSelectedTypes }: FiltersProps) {
         )}
       </button>
       {isOpen && (
-        <div className="absolute z-50 right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className={`${backgroundColor} absolute z-50 right-0 mt-2 w-48 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}>
           <div className="py-1">
             {POKEMON_TYPES.map((type) => (
-              <label key={type} className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+              <label key={type} className={`${contrastTextColor} ${isDarkMode ? 'hover:bg-gray-400' : 'hover:bg-gray-100'} flex items-center px-4 py-2`}>
                 <input
                   type="checkbox"
                   checked={selectedTypes.includes(type)}

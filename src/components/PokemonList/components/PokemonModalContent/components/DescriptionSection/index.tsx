@@ -1,5 +1,7 @@
+import useTheme from "@store/useTheme";
 
 function DescriptionSection({ pokemonDescription, descriptionLoading }: { pokemonDescription: string, descriptionLoading: boolean; }) {
+  const { contrastTextColor } = useTheme();
   return (
     <div className="mt-4 text-center text-gray-600 text-sm px-4 w-full max-w-[300px]">
       {descriptionLoading ? (
@@ -9,7 +11,7 @@ function DescriptionSection({ pokemonDescription, descriptionLoading }: { pokemo
           <div className="block w-full h-2 bg-gray-300 rounded-full">&nbsp;</div>
         </div>
       ) : (
-        <p className="text-gray-600 text-sm px-4 w-full max-w-[400px] h-10">
+        <p className={`${contrastTextColor} text-sm px-4 w-full max-w-[400px] h-10`}>
           {pokemonDescription}
         </p>
       )}

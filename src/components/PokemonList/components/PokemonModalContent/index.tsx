@@ -8,12 +8,14 @@ import DescriptionSection from './components/DescriptionSection';
 import StatsSection from './components/StatsSection';
 import ImageSection from './components/ImageSection';
 import useModalContent from './useModalContent';
+import useTheme from '@store/useTheme';
 interface PokemonModalContentProps {
   pokemon: Pokemon;
   setSelectedPokemon: (pokemon: Pokemon | null) => void;
 }
 
 const PokemonModalContent = ({ pokemon, setSelectedPokemon }: PokemonModalContentProps) => {
+  const { backgroundColor } = useTheme();
   const {
     pokemonDetails,
     pokemonDescription,
@@ -53,7 +55,7 @@ const PokemonModalContent = ({ pokemon, setSelectedPokemon }: PokemonModalConten
   return (
     <div style={{ backgroundColor: typeColors?.normal }} className={`bg-${typeColors?.normal || 'gray-500'} flex flex-col items-center pt-6 px-4 relative`}>
       <HeaderSection name={name} id={id} setSelectedPokemon={setSelectedPokemon} />
-      <div className="mt-36 flex flex-col justify-end items-center bg-white rounded-3xl w-full h-[600px] pb-4">
+      <div className={`${backgroundColor} mt-36 flex flex-col justify-end items-center rounded-3xl w-full h-[600px] pb-4`}>
         <ImageSection sprites={sprites} name={name} />
         <TypesBadges types={types} />
         <AboutSection weight={weight} height={height} abilities={abilities} />
